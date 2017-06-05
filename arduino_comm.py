@@ -1,7 +1,10 @@
 from time import sleep
 import sys
 import serial
-ser = serial.Serial('/dev/ttyUSB1', 9600) # Establish the connection on a specific port
+
+def init(port_name= '/dev/ttyUSB1'):
+    global ser
+    ser = serial.Serial(portname, 9600) # Establish the connection on a specific port
 
 def send_char(char):
     ser.write(char)
@@ -12,6 +15,7 @@ def send_command(string):
         send_char(s)
 
 if __name__ == '__main__':
+    init()
     sleep(2)
     send_command(sys.argv[1])
 
