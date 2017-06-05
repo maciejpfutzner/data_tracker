@@ -1,6 +1,7 @@
 from googlefinance import getQuotes
 import json
 import datetime
+import time
 from pytz import timezone
 import re
 
@@ -9,13 +10,13 @@ import re
 Stock = "AAPL"
 
 # Returns a string of stock information, including price, trade time etc
-def getInfo():
+def getInfo(Stock):
     fetchedData = getQuotes(Stock)
     return fetchedData[0]
 
 # Returns specific information on request
 def getSpecific(Info):
-    return getInfo()[Info]
+    return getInfo(Stock)[Info]
 
 # Returns price of stock
 def getPrice():
@@ -24,6 +25,7 @@ def getPrice():
 
 # Returns trade time
 def getTradeTime():
+    print "Current time:", getSpecific("LastTradeTime")
     return getSpecific("LastTradeTime")
 
 # Returns index (NASTAQ, LON etc)
@@ -57,8 +59,17 @@ def isOpen():
 #-------------------------------------------------------#
 if __name__ == '__main__':
 
+
     print getPrice()
-    print isOpen()
+
+    '''
+    while True:
+        getTradeTime()
+        getPrice()
+        print " "
+
+        time.sleep(5)
+        '''
 
 
 
