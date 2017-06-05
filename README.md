@@ -2,4 +2,7 @@
 
 Challenge \#12 at the UCL PPC Hackathon - Team 7
 
-TODO: add stuff
+
+### How to install missing packages
+
+type `pip install -r requirements.txt`
