@@ -31,6 +31,17 @@ void setup() {
 
 }
 
+void decode(int inByte) {
+  if (inByte == 'n') {
+    i = 3;
+    number = 0;
+  }
+  else {
+    number = number + (inByte * i);
+    i = i / 10;
+  }
+}
+
 void loop() {
 
   /**char c;
@@ -41,11 +52,10 @@ void loop() {
   //digitalWrite(A0, HIGH);
   char inByte = ' ';
   if (Serial.available()) { // only send data back if data has been sent
-    int inByte = Serial.read(); // read the incoming data
-    number = number + (inByte * i);
+    int inByte = Serial.read() - 48; // read the incoming data
+    decode(inByte);
     //Serial.println(inByte); // send the data back in a new line so that it is not all one long line
     //Serial.println(number);
-    i = i / 10;
   }
 
   /**while (Serial.available()) {
@@ -59,4 +69,5 @@ void loop() {
   //sevseg.setChars(c);
   sevseg.refreshDisplay(); // Must run repeatedly**/
 }
+
 
