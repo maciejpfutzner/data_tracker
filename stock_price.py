@@ -7,30 +7,28 @@ import re
 
 #-------------------------------------------------------#
 
-Stock = "AAPL"
-
 # Returns a string of stock information, including price, trade time etc
 def getInfo(Stock):
     fetchedData = getQuotes(Stock)
     return fetchedData[0]
 
 # Returns specific information on request
-def getSpecific(Info):
+def getSpecific(Stock, Info):
     return getInfo(Stock)[Info]
 
 # Returns price of stock
-def getPrice():
-    print Stock, "stock price:", getSpecific("LastTradePrice")
-    return getSpecific("LastTradePrice")
+def getPrice(Stock):
+    print Stock, "stock price:", getSpecific(Stock, "LastTradePrice")
+    return getSpecific(Stock, "LastTradePrice")
 
 # Returns trade time
-def getTradeTime():
-    print "Current time:", getSpecific("LastTradeTime")
-    return getSpecific("LastTradeTime")
+def getTradeTime(Stock):
+    print "Current time:", getSpecific(Stock, "LastTradeTime")
+    return getSpecific(Stock, "LastTradeTime")
 
 # Returns index (NASTAQ, LON etc)
-def getIndex():
-    return getSpecific("Index")
+def getIndex(Stock):
+    return getSpecific(Stock, "Index")
 
 # Checks if market is trading. Currently works for NASDAQ & LSE
 def isOpen():
@@ -59,18 +57,8 @@ def isOpen():
 #-------------------------------------------------------#
 if __name__ == '__main__':
 
-
-    print getPrice()
-
-    '''
-    while True:
-        getTradeTime()
-        getPrice()
-        print " "
-
-        time.sleep(5)
-        '''
-
+    print getPrice(Stock)
+    print getTradeTime(Stock)
 
 
 
