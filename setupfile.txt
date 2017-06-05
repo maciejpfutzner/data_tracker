@@ -1,1 +1,1 @@
-{"UpperLimit": 0.5, "Type": "Bitcoin", "LowerLimit": 0.5, "Stock": "BARC"}
+{"UpperLimit": 0.5, "Type": "Fake", "LowerLimit": 0.5, "Stock": "BARC"}

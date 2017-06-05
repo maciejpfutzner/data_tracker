@@ -1,7 +1,7 @@
 import json
 
 # Choose either "Bitcoin" or "Stock"
-Type = "Stock"
+Type = "Fake"
 # Choose stock (code name)
 StockName = "BARC"
 # Upper threshold limit (percentage)
