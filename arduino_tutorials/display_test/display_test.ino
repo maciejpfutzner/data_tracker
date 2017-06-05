@@ -2,6 +2,7 @@
 
 int number;
 int i;
+int dp;
 SevSeg sevseg; //Initiate a seven segment controller object
 
 void setup() {
@@ -12,6 +13,7 @@ void setup() {
 
   number = 0;
   i = 1000;
+  dp = 0;
 
   byte digitPins[] = {2, 3, 4, 5};
 
@@ -31,13 +33,20 @@ void setup() {
 
 }
 
-void decode(int inByte) {
+void decode(char inByte) {
   if (inByte == 'n') {
-    i = 3;
+    i = 1000;
     number = 0;
   }
+  else if (i == 3) {
+    dp = inByte - 48;
+  }
   else {
-    number = number + (inByte * i);
+    int digit = inByte - 48;
+    number = number + (digit * i);
+    if ( i == 1 ) {
+      i = 30;
+    }
     i = i / 10;
   }
 }
@@ -52,7 +61,7 @@ void loop() {
   //digitalWrite(A0, HIGH);
   char inByte = ' ';
   if (Serial.available()) { // only send data back if data has been sent
-    int inByte = Serial.read() - 48; // read the incoming data
+    inByte = Serial.read(); // read the incoming data
     decode(inByte);
     //Serial.println(inByte); // send the data back in a new line so that it is not all one long line
     //Serial.println(number);
@@ -65,7 +74,7 @@ void loop() {
     Serial.println(number);
     }**/
 
-  sevseg.setNumber(number, 3);
+  sevseg.setNumber(number, dp);
   //sevseg.setChars(c);
   sevseg.refreshDisplay(); // Must run repeatedly**/
 }
