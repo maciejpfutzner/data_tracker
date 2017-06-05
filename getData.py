@@ -2,52 +2,66 @@ from googlefinance import getQuotes
 import json
 import datetime
 from pytz import timezone
+import re
 
 #-------------------------------------------------------#
 
-def getInfo(Stock):
+Stock = "AAPL"
+
+# Returns a string of stock information, including price, trade time etc
+def getInfo():
     fetchedData = getQuotes(Stock)
     return fetchedData[0]
 
-def getSpecific(Stock, Info):
-    fetchedData = getQuotes(Stock)
-    return fetchedData[0][Info]
+# Returns specific information on request
+def getSpecific(Info):
+    return getInfo()[Info]
 
+# Returns price of stock
 def getPrice():
-    return getSpecific(Stock, "LastTradePrice")
+    print Stock, "stock price:", getSpecific("LastTradePrice")
+    return getSpecific("LastTradePrice")
 
-def isOpen(TradeTime):
+# Returns trade time
+def getTradeTime():
+    return getSpecific("LastTradeTime")
 
-    Year, Month, Day, Hour, Minute, Second = int(TradeTime[0:4]), int(TradeTime[5:7]), int(TradeTime[8:10]), int(TradeTime[11:13]),int(TradeTime[14:16]), int(TradeTime[17:19])
+# Returns index (NASTAQ, LON etc)
+def getIndex():
+    return getSpecific("Index")
 
-    tz = timezone('US/Eastern')
-    now = datetime.datetime.now(tz)
-
-    stockTime = now.replace(hour=Hour, minute=Minute, second=Second, microsecond=0)
-    openTime = now.replace(hour=9, minute=30, second=0, microsecond=0)
-    closeTime = now.replace(hour=16, minute=00, second=0, microsecond=0)
-
+# Checks if market is trading. Currently works for NASDAQ & LSE
+def isOpen():
+    Index = getIndex()
+    TradeTime = getSpecific("LastTradeDateTime")
+    Hour, Minute, Second = int(TradeTime[11:13]),int(TradeTime[14:16]), int(TradeTime[17:19])
+    if (Index == "NASDAQ"):
+        tz = timezone('US/Eastern')
+        now = datetime.datetime.now(tz)
+        stockTime = now.replace(hour=Hour, minute=Minute, second=Second, microsecond=0)
+        openTime = now.replace(hour=9, minute=30, second=0, microsecond=0)
+        closeTime = now.replace(hour=16, minute=00, second=0, microsecond=0)
+    if (Index == "LON"):
+        tz = timezone('US/Eastern')
+        now = datetime.datetime.now(tz)
+        stockTime = now.replace(hour=Hour, minute=Minute, second=Second, microsecond=0)
+        openTime = now.replace(hour=8, minute=00, second=0, microsecond=0)
+        closeTime = now.replace(hour=16, minute=30, second=0, microsecond=0)
     if (stockTime > openTime) and (stockTime < closeTime):
-        print "Stock is currently trading."
+        print Index, "stock market is currently trading."
         return True
-
     else:
-        print "Stock is no longer trading."
+        print Index, "stock is no longer trading."
         return False
 
 #-------------------------------------------------------#
 if __name__ == '__main__':
 
-
-    Stock = "BARC"
-
-
-    #Price =  float(getInfo(Stock, "LastTradePrice"))
-    #TradeTime = getInfo(Stock, "LastTradeDateTime")
-
-
-    print getInfo(Stock)
     print getPrice()
+    print isOpen()
+
+
+
 
 
 
