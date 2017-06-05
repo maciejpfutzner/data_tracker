@@ -1,11 +1,11 @@
 import requests
-import json
 
 API = "http://api.coindesk.com/v1/bpi/currentprice.json"
 
 def get_bpi_info():
-    return json.loads(requests.get(API).text)
+    return requests.get(API).json()
 
+# Get Bitcoin rate in currency
 def get_rate(currency="usd"):
     currency = currency.upper()
     bpi_info = get_bpi_info()
