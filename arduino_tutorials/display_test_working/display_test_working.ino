@@ -43,8 +43,8 @@ void loop() {
   if (Serial.available()) { // only send data back if data has been sent
     int inByte = Serial.read(); // read the incoming data
     number = number + (inByte * i);
-    //Serial.println(inByte); // send the data back in a new line so that it is not all one long line
-    //Serial.println(number);
+    Serial.println(inByte); // send the data back in a new line so that it is not all one long line
+    Serial.println(number);
     i = i / 10;
   }
 
