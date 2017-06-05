@@ -6,9 +6,6 @@ import os
 import arduino_comm as acomm
 
 
-def getSingleString(number, ):
-    return
-
 # Converts number to string and sorts formatting for arduino
 def converToString(number):
     number = round(float(number),1)
@@ -21,7 +18,7 @@ def converToString(number):
 #-------------------------------------------------------#
 if __name__ == '__main__':
 
-# Main loop to run the stockbit algorithm 
+# Main loop to run the stockbit algorithm
     while True:
         with open('setupfile.txt') as json_file:
             setup = json.load(json_file)
@@ -37,8 +34,8 @@ if __name__ == '__main__':
         
             sp.getPrice(Stock)
             sp.getTradeTime(Stock)
-            
-            print converToString(sp.getPrice(Stock))
+
+            acomm.send_command(converToString(sp.getPrice(Stock)))
             
             print " "
         
@@ -46,6 +43,8 @@ if __name__ == '__main__':
         
             print "Current type:", Type
             print bp.get_rate()
+        
+            acomm.send_command(convertToString(bp.get_rate()))
         
             print " "
         
