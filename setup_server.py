@@ -82,7 +82,7 @@ class S(BaseHTTPRequestHandler):
         self.end_headers()
 
         data = json.loads(self.data_string)
-        with open("setupfile.txt", "w") as outfile:
+        with open("setupfile.json", "w") as outfile:
             json.dump(data, outfile)
         print "{}".format(data)
         #f = open("for_presen.py")

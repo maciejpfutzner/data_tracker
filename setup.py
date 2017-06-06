@@ -12,10 +12,10 @@ def setTimer(Mins):
     return Timer.isoformat()
 
 def setObject(Name, Setting):
-    with open('setupfile.txt', 'r') as json_file:
+    with open('setupfile.json', 'r') as json_file:
         setup = json.load(json_file)
         setup[Name] = Setting
-    with open('setupfile.txt', 'w') as outfile:
+    with open('setupfile.json', 'w') as outfile:
         json.dump(setup, outfile)
     return
 
@@ -33,26 +33,31 @@ def main(argv=sys.argv):
     parser.add_argument("--Reminder", action='append')
     options = parser.parse_args()
     
-    with open('setupfile.txt') as json_file:
-       setup = json.load(json_file)
+    try:
+        with open('setupfile.json') as json_file:
+            setup = json.load(json_file)
 
-    if(options.Type): Type = "".join(options.Type)
-    else: Type = str(setup["Type"])
-    if(options.Stock): StockName = "".join(options.Stock)
-    else: StockName = str(setup["Stock"])
-    if(options.ULim): ULim = "".join(options.ULim)
-    else: ULim = str(setup["UpperLimit"])
-    if(options.LLim): LLim = "".join(options.LLim)
-    else: LLim = str(setup["LowerLimit"])
-    if(options.Alarm): Alarm = "".join(options.Alarm)
-    else: Alarm = str(setup["Alarm"])
-    if(options.Reminder): Reminder = int("".join(options.Reminder))
-    else: Reminder = -5
-    
-    setup = {'Type':Type, 'Stock':StockName, 'UpperLimit':ULim, 'LowerLimit':LLim, 'Alarm':Alarm, 'Reminder':setTimer(Reminder)}
+        if(options.Type): Type = "".join(options.Type)
+        else: Type = str(setup["Type"])
+        if(options.Stock): StockName = "".join(options.Stock)
+        else: StockName = str(setup["Stock"])
+        if(options.ULim): ULim = "".join(options.ULim)
+        else: ULim = str(setup["UpperLimit"])
+        if(options.LLim): LLim = "".join(options.LLim)
+        else: LLim = str(setup["LowerLimit"])
+        if(options.Alarm): Alarm = "".join(options.Alarm)
+        else: Alarm = str(setup["Alarm"])
+        if(options.Reminder): Reminder = int("".join(options.Reminder))
+        else: Reminder = -5
+        
+        setup = {'Type':Type, 'Stock':StockName, 'UpperLimit':ULim, 'LowerLimit':LLim, 'Alarm':Alarm, 'Reminder':setTimer(Reminder)}
+
+    except IOError:
+        # If no file exists, start from zero
+        setup = {'Type':'Stock', 'Stock':'AAPL', 'UpperLimit':'160', 'LowerLimit':'140', 'Alarm':'off'}
 
 
-    with open('setupfile.txt', 'w') as outfile:
+    with open('setupfile.json', 'w') as outfile:
         json.dump(setup, outfile)
 
 

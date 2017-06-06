@@ -26,7 +26,7 @@ if __name__ == '__main__':
     ## Main loop to run the stockbit algorithm
     fakeIndex = 0
     while True:
-        with open('setupfile.txt') as json_file:
+        with open('setupfile.json') as json_file:
             setup_file = json.load(json_file)
 
         Type = str(setup_file["Type"])
