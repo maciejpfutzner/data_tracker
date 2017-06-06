@@ -66,7 +66,7 @@ void decode(char inByte)
       number = 0;
       break;
     case 'b':
-      buzzCount = 1000;
+      buzzCount = 500;
       break;
     case 'r':
       digitalWrite(redLED, HIGH);
@@ -134,7 +134,7 @@ void loop()
 
   if (buzzCount > 0)
   {
-    tone(3, 10000);
+    tone(3, 5000);
     buzzCount--;
   }
   else
