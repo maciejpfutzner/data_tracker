@@ -20,7 +20,7 @@ def convertToString(number):
 #-------------------------------------------------------#
 if __name__ == '__main__':
 
-    acomm.init()
+    #acomm.init()
 
     ## Main loop to run the stockbit algorithm
     fakeIndex = 0
@@ -44,10 +44,10 @@ if __name__ == '__main__':
         
             if price < float(sp.getOpenPrice(Stock)):
                 print "Price below opening"
-                acomm.send_command("or")
+                #acomm.send_command("or")
             if price > float(sp.getOpenPrice(Stock)):
                 print "Price above opening"
-                acomm.send_command("og")
+                #acomm.send_command("og")
         
         elif Type == "Bitcoin":
         
@@ -66,19 +66,19 @@ if __name__ == '__main__':
             price = fd.get_value(fakeIndex)
             string = convertToString(fd.get_value(fakeIndex))
 
-        acomm.send_command(string)
+        #acomm.send_command(string)
 
         ## Checks lower limit and if statement is true turns on red LED and alarm
         if price < LLim and Alarm == "on":
             print "Alarm on for lower limit"
-            acomm.send_command("ora")
+            #acomm.send_command("ora")
             setup.setObject("Alarm", "off")
 
         ## Checks upper limit and if statement is true turns on green LED and alarm
         if price > ULim and Alarm == "on":
             print "Alarm on for upper limit"
-            acomm.send_command("oga")
+            #acomm.send_command("oga")
             setup.setObject("Alarm", "off")
 
         print " "
-        time.sleep(5)
+        time.sleep(3)
