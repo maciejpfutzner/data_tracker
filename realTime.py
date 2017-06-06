@@ -79,7 +79,7 @@ if __name__ == '__main__':
                 print "Price above opening"
                 acomm.send_command("og")
 
-        acomm.send_command(string)
+        acomm.send_command(string+'b')
 
         ## Checks lower limit and if statement is true turns on red LED and alarm
         if price < LLim and Alarm == "on":
