@@ -5,9 +5,10 @@ import json
 import os
 import arduino_comm as acomm
 import fakeData as fd
+import setup
 
 
-# Converts number to string and sorts formatting for arduino
+## Converts number to string and sorts formatting for arduino
 def convertToString(number):
     number = round(float(number),1)
     decimal = str(4 - str(number).find("."))
@@ -21,7 +22,7 @@ if __name__ == '__main__':
 
     acomm.init()
 
-    # Main loop to run the stockbit algorithm
+    ## Main loop to run the stockbit algorithm
     fakeIndex = 0
     while True:
         with open('setupfile.txt') as json_file:
@@ -29,20 +30,30 @@ if __name__ == '__main__':
 
         Type = str(setup["Type"])
         Stock = str(setup["Stock"])
-        ULimit = float(setup["UpperLimit"])
-        LLimit = float(setup["LowerLimit"])
+        ULim = float(setup["UpperLimit"])
+        LLim = float(setup["LowerLimit"])
+        Alarm = str(setup["Alarm"])
+        
         
         if Type == "Stock":
             
-            print "Current stock:", Stock
-            sp.getPrice(Stock)
-            sp.getTradeTime(Stock)
+            TradeTime = sp.getTradeTime(Stock)
+            price = float(sp.getPrice(Stock))
+            print Stock, "opening price:", price
             string = convertToString(sp.getPrice(Stock))
+        
+            if price < float(sp.getOpenPrice(Stock)):
+                print "Price below opening"
+                acomm.send_command("or")
+            if price > float(sp.getOpenPrice(Stock)):
+                print "Price above opening"
+                acomm.send_command("og")
         
         elif Type == "Bitcoin":
         
             print "Current type:", Type
             print bp.get_rate()
+            price = float(bp.get_rate())
             string = convertToString(bp.get_rate())
         
         elif Type == "Fake":
@@ -52,13 +63,22 @@ if __name__ == '__main__':
             fakeIndex = fakeIndex + 1
             if (fakeIndex >= len(fd.myArrayOfData)):
                 fakeIndex = 0
+            price = fd.get_value(fakeIndex)
             string = convertToString(fd.get_value(fakeIndex))
-        
-        acomm.send_command(string)
-        #acomm.send_command("b")
-        print " "
 
-        
-        
-        
+        acomm.send_command(string)
+
+        ## Checks lower limit and if statement is true turns on red LED and alarm
+        if price < LLim and Alarm == "on":
+            print "Alarm on for lower limit"
+            acomm.send_command("ora")
+            setup.setObject("Alarm", "off")
+
+        ## Checks upper limit and if statement is true turns on green LED and alarm
+        if price > ULim and Alarm == "on":
+            print "Alarm on for upper limit"
+            acomm.send_command("oga")
+            setup.setObject("Alarm", "off")
+
+        print " "
         time.sleep(5)
