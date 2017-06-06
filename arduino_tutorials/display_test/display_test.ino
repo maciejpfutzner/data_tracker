@@ -4,6 +4,10 @@ int number;
 int i, buzzCount;
 int dp;
 int frequency;
+int redLED;
+int greenLED;
+int alarmON;
+int alarmCount;
 
 SevSeg sevseg; //Initiate a seven segment controller object
 
@@ -17,6 +21,10 @@ void setup() {
   i = 1000;
   dp = 0;
   buzzCount = 10000;
+  redLED = -1;
+  greenLED = -1;
+  alarmON = 0;
+  alarmCount = 10000;
 
   byte digitPins[] = {2, A5, 4, 5};
 
@@ -31,7 +39,11 @@ void setup() {
   Serial.begin(9600); // set the baud rate
   Serial.println("Ready"); // print "Ready" once
 
-  //pinMode(A0, OUTPUT);
+  // Setup red and green LEDs
+
+  pinMode(redLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+
 }
 
 void decode(char inByte) {
@@ -41,6 +53,20 @@ void decode(char inByte) {
   }
   else if (inByte == 'b') {
     buzzCount = 0;
+  }
+  else if (inByte == 'r') {
+    digitalWrite(redLED, HIGH);
+  }
+  else if (inByte == 'g') {
+    digitalWrite(greenLED, HIGH);
+  }
+  else if (inByte == 'c') {
+    digitalWrite(redLED, LOW);
+    digitalWrite(greenLED, LOW);
+    alarmON = 0;
+  }
+  else if (inByte == 'a') {
+    alarmON = 1;
   }
   else if (i == 3) {
     dp = inByte - 48;
@@ -89,6 +115,20 @@ void loop() {
     noTone(3);
     }
   frequency = analogRead(A0)*5 + 1000;
+
+  // Alarm code
+  if (alarmON) {
+    if (alarmCount < 5000) {
+      noTone(3);
+    }
+    else {
+      tone(3, 5000);
+    }
+    --alarmCount;
+    if(alarmCount == 0) {
+      alarmCount = 10000;
+    }
+  }
 }
 
 
