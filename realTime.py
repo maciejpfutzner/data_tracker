@@ -17,6 +17,7 @@ def convertToString(number):
     return numStr
 
 
+
 #-------------------------------------------------------#
 if __name__ == '__main__':
 
@@ -26,13 +27,16 @@ if __name__ == '__main__':
     fakeIndex = 0
     while True:
         with open('setupfile.txt') as json_file:
-            setup = json.load(json_file)
+            setup_file = json.load(json_file)
 
-        Type = str(setup["Type"])
-        Stock = str(setup["Stock"])
-        ULim = float(setup["UpperLimit"])
-        LLim = float(setup["LowerLimit"])
-        Alarm = str(setup["Alarm"])
+        Type = str(setup_file["Type"])
+        Stock = str(setup_file["Stock"])
+        Alarm = str(setup_file["Alarm"])
+
+        ULim = setup_file["UpperLimit"]
+        LLim = setup_file["LowerLimit"]
+        ULim = 1e6 if ULim=="" else float(ULim)
+        LLim = 0 if LLim=="" else float(LLim)
         
         
         if Type == "Stock":
@@ -55,6 +59,7 @@ if __name__ == '__main__':
             print bp.get_rate()
             price = float(bp.get_rate())
             string = convertToString(bp.get_rate())
+            acomm.send_command("o")
         
         elif Type == "Fake":
             print "Current type:", Type
@@ -81,4 +86,4 @@ if __name__ == '__main__':
             setup.setObject("Alarm", "off")
 
         print " "
-        time.sleep(5)
+        time.sleep(2)
