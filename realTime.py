@@ -65,11 +65,12 @@ if __name__ == '__main__':
             print "Current type:", Type
             print fd.get_value(fakeIndex)
 
-            fakeIndex = fakeIndex + 1
-            if (fakeIndex >= len(fd.myArrayOfData)):
+            if (fakeIndex == len(fd.myArrayOfData)):
                 fakeIndex = 0
             price = fd.get_value(fakeIndex)
-            string = convertToString(fd.get_value(fakeIndex))
+            price = float(price)
+            string = convertToString(price)
+            fakeIndex += 1
 
             if price < 100:
                 print "Price below opening"
