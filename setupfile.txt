@@ -1,1 +1,1 @@
-{"UpperLimit": 0.5, "Type": "Fake", "LowerLimit": 0.5, "Stock": "BARC"}
+{"LowerLimit": "208", "Alarm": "on", "Reminder": "2017-06-06T12:02:06.491537", "Stock": "BARC", "Type": "Stock", "UpperLimit": "212"}
