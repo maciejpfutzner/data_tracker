@@ -1,1 +1,1 @@
-{"LowerLimit": "208", "Alarm": "on", "Reminder": "2017-06-06T12:02:06.491537", "Stock": "BARC", "Type": "Stock", "UpperLimit": "212"}
+{"LowerLimit": 208.0, "Alarm": "on", "Reminder": "2017-06-06T13:07:05.713415", "Stock": "BARC", "Type": "Bitcoin", "UpperLimit": 212.0}

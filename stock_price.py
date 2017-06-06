@@ -7,7 +7,7 @@ import re
 
 #-------------------------------------------------------#
 
-Stock = "BARC"
+Stock = "AAPL"
 
 # Returns a string of stock information, including price, trade time etc
 def getInfo(Stock):

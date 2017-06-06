@@ -71,6 +71,13 @@ if __name__ == '__main__':
             price = fd.get_value(fakeIndex)
             string = convertToString(fd.get_value(fakeIndex))
 
+            if price < 100:
+                print "Price below opening"
+                acomm.send_command("or")
+            if price > 100:
+                print "Price above opening"
+                acomm.send_command("og")
+
         acomm.send_command(string)
 
         ## Checks lower limit and if statement is true turns on red LED and alarm
@@ -86,4 +93,6 @@ if __name__ == '__main__':
             setup.setObject("Alarm", "off")
 
         print " "
-        time.sleep(2)
+
+        time.sleep(3)
+
