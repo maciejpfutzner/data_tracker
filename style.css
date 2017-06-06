@@ -1,0 +1,50 @@
+body {
+  margin: 1.5em;
+  margin-right: 2.5em;
+  font-family: Arial, sans-serif;
+}
+
+.centered {
+  display: block;
+  margin: 0px auto;
+}
+
+a {
+  text-decoration: none;
+  border: 0;
+}
+a:link {
+  /*font-weight: bold;*/
+}
+a:visited {
+  color: #0000EE;
+}
+a:hover {
+  color: #FF0000;
+}
+
+code, samp, kbd, tt {
+  position: relative;
+  top: -0.03em;
+  font-size: 105%;
+  /*
+  font-family: Courier, monospace;
+  font-size: 85%;
+  */
+}
+
+code.block, samp.block {
+  width: 700px;
+  display: block;
+  background-color: #f0f0f0;
+  margin-left: 1.0em;
+  padding: 0.1em;
+}
+
+samp.pre {
+  white-space: pre-wrap;
+}
+
+code {
+  font-weight: bold;
+}

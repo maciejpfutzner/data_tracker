@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
-    <title>Basic JSON Editor Example</title>
+    <title>StockBit setup</title>
     <script src="dist/jsoneditor.js"></script>
   </head>
   <body>
-    <h1>Basic JSON Editor Example</h1>
+    <h1>StockBit setup</h1>
     
     <div id='editor_holder'></div>
-    <button id='submit'>Submit (console.log)</button>
+    <button id='submit'>Setup</button>
     
     <script>
       // Initialize the editor with a JSON schema
@@ -22,7 +23,8 @@
               type: "string",
               enum: [
                 "Stock",
-                "Bitcoin"
+                "Bitcoin",
+                "Demo"
               ],
               default: "Stock"
             },
