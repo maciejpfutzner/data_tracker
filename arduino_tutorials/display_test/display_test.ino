@@ -8,10 +8,13 @@ int redLED;
 int greenLED;
 int alarmON;
 int alarmCount;
+int redON;
+int greenON;
 
 SevSeg sevseg; //Initiate a seven segment controller object
 
-void setup() {
+void setup()
+{
 
   // Setup display
 
@@ -25,6 +28,8 @@ void setup() {
   greenLED = -1;
   alarmON = 0;
   alarmCount = 10000;
+  redON = 0;
+  greenON = 0;
 
   byte digitPins[] = {2, A5, 4, 5};
 
@@ -36,52 +41,58 @@ void setup() {
 
   // Setup python interface
 
-  Serial.begin(9600); // set the baud rate
+  Serial.begin(9600);      // set the baud rate
   Serial.println("Ready"); // print "Ready" once
 
   // Setup red and green LEDs
 
   pinMode(redLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
-
 }
 
-void decode(char inByte) {
-  if (inByte == 'n') {
+void decode(char inByte)
+{
+  switch (inByte)
+  {
+  case 'n':
     i = 1000;
     number = 0;
-  }
-  else if (inByte == 'b') {
+  case 'b':
     buzzCount = 0;
-  }
-  else if (inByte == 'r') {
+  case 'r':
     digitalWrite(redLED, HIGH);
-  }
-  else if (inByte == 'g') {
+    redON = 1;
+  case 'g':
     digitalWrite(greenLED, HIGH);
-  }
-  else if (inByte == 'c') {
+    greenON = 1;
+  case 'c':
+    alarmON = 0;
+  case 'a':
+    alarmON = 1;
+  case 'o':
     digitalWrite(redLED, LOW);
     digitalWrite(greenLED, LOW);
-    alarmON = 0;
+    redON = 0;
+    greenON = 0;
   }
-  else if (inByte == 'a') {
-    alarmON = 1;
-  }
-  else if (i == 3) {
+  if (i == 3)
+  {
     dp = inByte - 48;
   }
-  else {
+  else
+  {
     int digit = inByte - 48;
     number = number + (digit * i);
-    if ( i == 1 ) {
+    if (i == 1)
+    {
       i = 30;
     }
     i = i / 10;
   }
 }
 
-void loop() {
+void loop()
+{
 
   /**char c;
     c = Serial.read();
@@ -90,7 +101,8 @@ void loop() {
     //sevseg.setChars(c);**/
   //digitalWrite(A0, HIGH);
   char inByte = ' ';
-  if (Serial.available()) { // only send data back if data has been sent
+  if (Serial.available())
+  {                         // only send data back if data has been sent
     inByte = Serial.read(); // read the incoming data
     decode(inByte);
     //Serial.println(inByte); // send the data back in a new line so that it is not all one long line
@@ -108,27 +120,48 @@ void loop() {
   //sevseg.setChars(c);
   sevseg.refreshDisplay(); // Must run repeatedly
 
-  if (buzzCount < 1000) {
+  if (buzzCount < 1000)
+  {
     tone(3, frequency);
     buzzCount++;
-    } else {
+  }
+  else
+  {
     noTone(3);
-    }
-  frequency = analogRead(A0)*5 + 1000;
+  }
+  frequency = analogRead(A0) * 5 + 1000;
 
   // Alarm code
-  if (alarmON) {
-    if (alarmCount < 5000) {
+  if (alarmON)
+  {
+    if (alarmCount < 5000)
+    {
       noTone(3);
+      if (redON)
+      {
+        digitalWrite(redLED, LOW);
+      }
+      if (greenON)
+      {
+        digitalWrite(greenLED, LOW);
+      }
     }
-    else {
+    else
+    {
       tone(3, 5000);
+      if (redON)
+      {
+        digitalWrite(redLED, HIGH);
+      }
+      if (greenON)
+      {
+        digitalWrite(greenLED, HIGH);
+      }
     }
     --alarmCount;
-    if(alarmCount == 0) {
+    if (alarmCount == 0)
+    {
       alarmCount = 10000;
     }
   }
 }
-
-
