@@ -2,8 +2,12 @@ import requests
 
 API = "http://api.coindesk.com/v1/bpi/currentprice.json"
 
+# TODO: Try to catch timeout exceptions?...
 def get_bpi_info():
-    return requests.get(API).json()
+    while True:
+        req = requests.get(API)
+        if req.status_code == 200:
+            return req.json()
 
 # Get Bitcoin rate in currency
 def get_rate(currency="usd"):
