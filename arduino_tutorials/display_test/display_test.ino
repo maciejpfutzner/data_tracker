@@ -10,6 +10,9 @@ int alarmON;
 int alarmCount;
 int redON;
 int greenON;
+int buttonPin;
+int buttonState;
+int lastButtonState;
 
 SevSeg sevseg; //Initiate a seven segment controller object
 
@@ -24,12 +27,15 @@ void setup()
   i = 1000;
   dp = 0;
   buzzCount = 10000;
-  redLED = -1;
-  greenLED = -1;
+  redLED = -1;   //Set this
+  greenLED = -1; //Set this
   alarmON = 0;
   alarmCount = 10000;
   redON = 0;
   greenON = 0;
+  buttonPin = -1; //Set this
+  buttonState = 0;
+  lastButtonState = 0;
 
   byte digitPins[] = {2, A5, 4, 5};
 
@@ -48,6 +54,7 @@ void setup()
 
   pinMode(redLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
+  pinMode(buttonPin, INPUT);
 }
 
 void decode(char inByte)
@@ -130,6 +137,18 @@ void loop()
     noTone(3);
   }
   frequency = analogRead(A0) * 5 + 1000;
+
+  buttonState = digitalRead(buttonPin);
+  // compare the buttonState to its previous state
+  if (buttonState != lastButtonState)
+  {
+    alarmON = 0;
+    // Delay a bit to avoid bouncing
+    delay(50);
+  }
+  // save the current state as the last state,
+  //for next time through the loop
+  lastButtonState = buttonState;
 
   // Alarm code
   if (alarmON)
