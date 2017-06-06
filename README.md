@@ -11,3 +11,5 @@ Stock exchange prices come from the [googlefinance](https://github.com/hongtaoca
 ### How to install missing packages
 
 `pip install -r requirements.txt`
+
+We need the latest dev version of `googlefinance`, follow instructions [from here](https://github.com/hongtaocai/googlefinance) to install it from a git clone (clone it somewhere outside the data\_tracker dir)
