@@ -61,7 +61,7 @@ if __name__ == '__main__':
             string = convertToString(bp.get_rate())
             acomm.send_command("o")
         
-        elif Type == "Fake":
+        elif Type == "Demo":
             print "Current type:", Type
             print fd.get_value(fakeIndex)
 
