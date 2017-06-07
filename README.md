@@ -6,6 +6,7 @@ Current stock exchange price of a chosen company or the bitcoin rate is displaye
 
 Stock exchange prices come from the [googlefinance](https://github.com/hongtaocai/googlefinance) module and the Bitcoin Price Index is provided by the [CoinDesk API](http://www.coindesk.com/price/).
 
+![Picture of the setup](https://github.com/maciejpfutzner/data_tracker/blob/master/photo.jpg)
 
 
 ### How to install missing packages
