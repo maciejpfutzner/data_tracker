@@ -23,8 +23,7 @@ def main(argv=sys.argv):
     
     print argv
     
-    usage = "usage: %prog [options]"
-    parser = argparse.ArgumentParser(usage=usage)
+    parser = argparse.ArgumentParser()
     parser.add_argument("--Type", action='append')
     parser.add_argument("--Stock", action='append')
     parser.add_argument("--ULim", action='append')
